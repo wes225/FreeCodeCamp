@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.container {
+    dislay: grid;
+    background: rgb(102, 93, 93, 0.5);
+    margin-left: minmax(100px, 1fr);
+    margin-right: minmax(100px, 1fr);
+    margin-top: 100px;
+    grid-template-columns: 300px 300px;
+    align-items: center;
+    justify-items: center;
+}
+
+.timeline {
+    align-self: center;
+    justify-self: center;
+}

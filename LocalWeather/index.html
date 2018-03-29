@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <dev id='coordinates'></dev>
+
+</body>
+
+</html>
+
+<script>
+    function getCurrentLocation() {
+        var output = document.getElementById('coordinates');
+        output.innerHTML = navigator.geolocation.getCurrentPosition(success,
+            error);
+
+        function error() {
+            output.innerHTML = "Unable to retrieve your location";
+        }
+
+        function success(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            console.log(position);
+            getCityName(longitude, latitude);
+        }
+    }
+
+    function getCityName(longitude, latitude) {
+        var urlCall = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude +
+            '&key=AIzaSyD29yaou7CURfjjUOdWuHp-Uw7zaByeS7Y';
+        $.getJSON(urlCall, function (response) {
+            console.log(response);
+        })
+    }
+
+    function getWeather() {
+ var urlCall ='https://query.yahooapis.com/v1/public/yql?q=select%20astronomy.sunset%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22%2Cqc%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
+        $.getJSON(urlCall, function (response) {
+            console.log(response);
+        })
+        console.log(urlCall);
+
+    }
+
+    getWeather();
+</script>

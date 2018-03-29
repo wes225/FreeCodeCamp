@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>A quote a day</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Karla" rel="stylesheet">
+</head>
+
+
+<div class = "container">
+    
+    <div class = "blocText">
+        <blockquote>
+            <div id="quoteText"></div>
+            <footer id="authorText"></footer>
+        </blockquote>
+    </div>
+<button onclick="getJson()" class="button">Get Quote</button>
+</div>
+
+
+
+<script>
+    function getJson() {
+        $.getJSON("https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?", function (data) {
+            var items = [];
+            $.each(data, function (key, val) {
+                items.push(val);
+            })
+            document.getElementById("quoteText").innerHTML = "<p>\" " + items[0] + " \"</p>";
+
+            if (items[1] !=="") {
+document.getElementById("authorText").innerHTML = "<cite>" + items[1]+ "</cite>";
+            } else {
+ document.getElementById("authorText").innerHTML = "<cite>" + " Anonymous " + "</cite>";}
+        });
+    }
+
+    getJson();
+</script>
+
+<footer class="text-center">
+    <p>Coded and written by
+        <a href="https://www.freecodecamp.org/wes225" target="_blank">wes225</a>.</p>
+</footer>
+
+</html>

@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+     
+}
+html{
+    background: rgba(43, 142, 223, 1);
+}
+.container {
+    padding:30px;
+    display:grid;
+    grid-template-columns:repeat(3 , minmax(50px,1fr)) ;
+    grid-template-rows: repeat( 2, minmax(50px, 1fr));
+   
+    grid-gap: 20px;
+    grid-template-areas: 
+   
+    ". txt ." 
+    ". btn .";
+}
+
+.button{
+    
+    background: rgba(215, 222, 228, 0.1);
+    padding: 20px;
+    align-self: start;
+    justify-self: center;
+    font-family: 'Karla',sans-serif;
+    color: rgb(215, 222, 228);
+    border: 5px bold rgb(215, 222, 228);
+    grid-area: btn;
+    font-size: 2rem;
+}
+.blocText{
+    grid-area:txt;
+  background: rgba(255, 255, 255, 0.322);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+   
+
+}
+#quoteText {
+    font-size: 3rem;
+    font-family: 'Karla',sans-serif;
+    
+}
+#authorText{
+    font-size: 2rem;
+    font-family: 'Karla', sans-serif;
+}
+
+.footer{
+    text-align: center;
+    font-family: 'Karla', sans-serif;
+
+}

@@ -13,6 +13,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -23,6 +24,7 @@
 </html>
 
 <script>
+// Function to get the browser's current Location.
     function getCurrentLocation() {
         var output = document.getElementById('coordinates');
         output.innerHTML = navigator.geolocation.getCurrentPosition(success,
@@ -35,27 +37,47 @@
         function success(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            console.log(position);
-            getCityName(longitude, latitude);
+            getWeather(longitude, latitude);
+
         }
     }
-
-    function getCityName(longitude, latitude) {
+// Function to get the weather from a specified Longitude and Latitude
+    function getWeather(longitude, latitude) {
         var urlCall = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude +
             '&key=AIzaSyD29yaou7CURfjjUOdWuHp-Uw7zaByeS7Y';
+        
+        var city = '';
+        function cityNameSetter(cityName){
+            city = cityName;
+        }
+
         $.getJSON(urlCall, function (response) {
-            console.log(response);
+            var arrayOfResults = [];
+            $.each(response.results[0], function (key, val) {
+                arrayOfResults.push(val);
+            });
+            cityNameSetter(arrayOfResults[0][3]['short_name']);
+            
+        }).done(function (){
+             requestWeather(city);
+        });     
+    }
+// Function to make the call to Yahoo!'s weather API, with a specified city String.
+    function requestWeather(location) {
+        var apiAdress = 'https://query.yahooapis.com/v1/public/yql?q=';
+        var urlCall = apiAdress +
+            'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"' + location +
+            '")+&format=json';
+        $.getJSON(urlCall, function (response) {
+            var channel = response.query.results.channel;
+            console.log(channel.description);
+
+
         })
+
+
+
     }
 
-    function getWeather() {
- var urlCall ='https://query.yahooapis.com/v1/public/yql?q=select%20astronomy.sunset%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22%2Cqc%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
-        $.getJSON(urlCall, function (response) {
-            console.log(response);
-        })
-        console.log(urlCall);
-
-    }
-
-    getWeather();
+    getCurrentLocation();
 </script>

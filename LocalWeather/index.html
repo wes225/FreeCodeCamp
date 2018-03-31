@@ -13,21 +13,40 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.css"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.eot"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.svg"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.ttf"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.woff"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.woff2"></link>
+
+    <link rel="stylesheet" type="text/css" href="main.css"></link>
+
+    
 
 </head>
 
 <body>
-    <dev id='coordinates'></dev>
+
+    <!--Location adn Weather details -->
+    <div id='CurrentCity'></div>
+    <div id='Temperature'><i class="wi wi-night-sleet"></i></div>
+    <div id ='Wind'></div>
+    <div id = 'weatherIcon1' class = "weatherIcon"></div>
+   
 
 </body>
 
 </html>
 
 <script>
-// Function to get the browser's current Location.
+// Get the browser's current Location.
     function getCurrentLocation() {
-        var output = document.getElementById('coordinates');
-        output.innerHTML = navigator.geolocation.getCurrentPosition(success,
+        navigator.geolocation.getCurrentPosition(success,
             error);
 
         function error() {
@@ -41,7 +60,7 @@
 
         }
     }
-// Function to get the weather from a specified Longitude and Latitude
+// Get the weather from a specified Longitude and Latitude
     function getWeather(longitude, latitude) {
         var urlCall = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude +
             '&key=AIzaSyD29yaou7CURfjjUOdWuHp-Uw7zaByeS7Y';
@@ -62,7 +81,7 @@
              requestWeather(city);
         });     
     }
-// Function to make the call to Yahoo!'s weather API, with a specified city String.
+// Make the call to Yahoo!'s weather API, with a specified city String.
     function requestWeather(location) {
         var apiAdress = 'https://query.yahooapis.com/v1/public/yql?q=';
         var urlCall = apiAdress +
@@ -70,14 +89,18 @@
             '")+&format=json';
         $.getJSON(urlCall, function (response) {
             var channel = response.query.results.channel;
-            console.log(channel.description);
+            console.log(channel);
+            document.getElementById('CurrentCity').innerHTML = '<p>'+channel.location.city+', '+channel.location.region+'</p>';
+            document.getElementById('Temperature').innerHTML = '<p> Temperature: ' + channel.item.condition.temp + channel.units.temperature+ ', ' + channel.item.condition.text + '</p>';
+            document.getElementById('Wind').innerHTML = '<p>Wind speed: ' + channel.wind.speed + ' mph. </p>';
+
+            //Getting the Icon for the current weather
+            var iconCode= channel.item.condition.code;
+            console.log(iconCode);
+            document.getElementById('weatherIcon1').innerHTML = '<i class= \"wi wi-yahoo-'+iconCode+'\"></i>';
 
 
-        })
-
-
-
-    }
-
+        });
+    };
     getCurrentLocation();
 </script>

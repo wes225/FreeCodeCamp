@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+html {
+    background: rgb(46, 65, 114, 1);
+}
+
+#ResultContainer {
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fill, 1fr);
+    background: rgb(46, 65, 114, 1);
+    grid-gap: 10px;
+    padding: 10px
+}
+
+.itemBox {
+    background: rgba(199, 207, 228, 0.753);
+    padding: 15px;
+}
+
+
+
+a {
+    outline: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+    color: black;
+    border-top: 3px solid transparent;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-radius: 6px;
+    transition: border .5s;
+    padding: 10px;
+}
+a:link, a:visited, a:focus {
+    text-decoration: none
+}
+
+a:hover {
+    
+    border: 3px solid white;
+    border-radius: 6px;
+}
+

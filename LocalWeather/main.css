@@ -1,3 +1,151 @@
+* {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
 html{
-    background-color: gray;
+    background: rgb(46, 65, 114, 1);
+}
+
+.customContainer {
+    padding-top:40px;
+   margin-left:25%;
+   margin-right:25%;
+
+    width: 50%;
+    display:grid;
+    grid-template-columns: repeat(4, (minmax(10px,1fr)));
+    grid-template-rows: repeat(4, (minmax(10px, 1fr)));
+    grid-gap: 10px;
+    grid-template-areas: 
+    "title title title title"
+    ". . . . "
+    "wIcon wIcon . city "
+    "temp temp toggler wi";
+    
+}
+h1{
+    align-self: center;
+    justify-self: center;
+    grid-area: title;
+    color:rgb(120, 135, 171, 1);
+    font-family: 'Nunito',sans-serif;
+
+}
+
+.weatherIcon{
+    font-size: 3rem;
+}
+#weatherIcon1 {
+    align-self: center;
+    justify-self: center;
+    color:rgb(120, 135, 171, 1);
+    grid-area: wIcon;
+}
+
+#CurrentCity {
+    grid-area: city;
+    align-self: center;
+    justify-self: center;
+    color:rgb(120, 135, 171, 1);
+    font-family: 'Nunito',sans-serif;
+}
+#Temperature {
+    grid-area: temp;
+    align-self: center;
+    justify-self: center;
+    color:rgb(120, 135, 171, 1);
+    font-family: 'Nunito',sans-serif;
+}
+#Wind {
+    grid-area: wi;
+    align-self: center;
+    justify-self: center;
+    color:rgb(120, 135, 171, 1);
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Toggle Switch Button */ 
+
+
+.onoffswitch {
+    position: relative;
+    width: 90px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #999999;
+    border-radius: 20px;
+}
+
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 30px;
+    padding: 0;
+    line-height: 30px;
+    font-size: 14px;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+    content: "°C";
+    padding-left: 10px;
+    background-color: #5EC6E0;
+    color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+    content: "°F";
+    padding-right: 10px;
+    background-color: #DE7878;
+    color: #999999;
+    text-align: right;
+}
+
+.onoffswitch-switch {
+    display: block;
+    width: 18px;
+    margin: 6px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 56px;
+    border: 2px solid #999999;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
+    right: 0px;
 }

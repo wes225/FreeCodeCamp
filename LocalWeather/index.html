@@ -26,18 +26,33 @@
 
     <link rel="stylesheet" type="text/css" href="main.css"></link>
 
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
+
     
 
 </head>
 
 <body>
+ <div class = 'customContainer'>
+    <h1>Local weather, for FreeCodeCamp</h1>
 
     <!--Location adn Weather details -->
-    <div id='CurrentCity'></div>
-    <div id='Temperature'><i class="wi wi-night-sleet"></i></div>
-    <div id ='Wind'></div>
-    <div id = 'weatherIcon1' class = "weatherIcon"></div>
+    <h2  id='CurrentCity'></h2>
+    <p id='Temperature'></p>
+    <p id ='Wind'></p>
+    <div id = 'weatherIcon1'></div>
+
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+        <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
    
+   
+ </div>
 
 </body>
 
@@ -46,8 +61,7 @@
 <script>
 // Get the browser's current Location.
     function getCurrentLocation() {
-        navigator.geolocation.getCurrentPosition(success,
-            error);
+        navigator.geolocation.getCurrentPosition(success,error);
 
         function error() {
             output.innerHTML = "Unable to retrieve your location";
@@ -90,14 +104,14 @@
         $.getJSON(urlCall, function (response) {
             var channel = response.query.results.channel;
             console.log(channel);
-            document.getElementById('CurrentCity').innerHTML = '<p>'+channel.location.city+', '+channel.location.region+'</p>';
-            document.getElementById('Temperature').innerHTML = '<p> Temperature: ' + channel.item.condition.temp + channel.units.temperature+ ', ' + channel.item.condition.text + '</p>';
-            document.getElementById('Wind').innerHTML = '<p>Wind speed: ' + channel.wind.speed + ' mph. </p>';
+            document.getElementById('CurrentCity').innerText = channel.location.city+', '+channel.location.region;
+            document.getElementById('Temperature').innerHTML = 'Temperature and condition: ' + channel.item.condition.temp + channel.units.temperature +', ' + channel.item.condition.text;
+            document.getElementById('Wind').innerHTML = 'Wind speed: ' + channel.wind.speed + ' mph.';
 
             //Getting the Icon for the current weather
             var iconCode= channel.item.condition.code;
             console.log(iconCode);
-            document.getElementById('weatherIcon1').innerHTML = '<i class= \"wi wi-yahoo-'+iconCode+'\"></i>';
+            document.getElementById('weatherIcon1').innerHTML = '<i class= \"weatherIcon wi wi-yahoo-'+iconCode+'\"></i>';
 
 
         });

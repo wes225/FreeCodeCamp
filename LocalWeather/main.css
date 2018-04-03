@@ -21,10 +21,10 @@ html{
     grid-template-rows: repeat(4, (minmax(10px, 1fr)));
     grid-gap: 10px;
     grid-template-areas: 
-    "title title title title"
-    ". . . . "
-    "wIcon wIcon . city "
-    "temp temp toggler wi";
+    "title title title"
+    
+    "temp . city "
+    "wIcon toggler wi";
     
 }
 h1{
@@ -77,6 +77,9 @@ h1{
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    grid-area:toggler;
+    align-self: center;
+    justify-self:center;
 }
 
 .onoffswitch-checkbox {
@@ -124,7 +127,7 @@ h1{
     content: "°F";
     padding-right: 10px;
     background-color: #DE7878;
-    color: #999999;
+    color: #FFFFFF;
     text-align: right;
 }
 
@@ -149,3 +152,4 @@ h1{
 .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+

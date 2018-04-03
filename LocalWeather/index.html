@@ -44,7 +44,7 @@
     <div id = 'weatherIcon1'></div>
 
     <div class="onoffswitch">
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" >
         <label class="onoffswitch-label" for="myonoffswitch">
             <span class="onoffswitch-inner"></span>
             <span class="onoffswitch-switch"></span>
@@ -59,6 +59,9 @@
 </html>
 
 <script>
+    document.getElementById('myonoffswitch').removeAttribute('checked');
+
+
 // Get the browser's current Location.
     function getCurrentLocation() {
         navigator.geolocation.getCurrentPosition(success,error);
@@ -105,9 +108,8 @@
             var channel = response.query.results.channel;
             console.log(channel);
             document.getElementById('CurrentCity').innerText = channel.location.city+', '+channel.location.region;
-            document.getElementById('Temperature').innerHTML = 'Temperature and condition: ' + channel.item.condition.temp + channel.units.temperature +', ' + channel.item.condition.text;
+            document.getElementById('Temperature').innerHTML = '<span id="temperatureValue">' + channel.item.condition.temp+'</span>' + '<span id = "temperatureUnit">°'+channel.units.temperature +'</span>, ' + channel.item.condition.text;
             document.getElementById('Wind').innerHTML = 'Wind speed: ' + channel.wind.speed + ' mph.';
-
             //Getting the Icon for the current weather
             var iconCode= channel.item.condition.code;
             console.log(iconCode);
@@ -117,4 +119,30 @@
         });
     };
     getCurrentLocation();
+
+
+// Fahrenheit to Celcius conversion
+function convert(){
+    
+    // if the checkbox is checked, the current unit is then Fahrenheit
+    var currentValue = parseInt(document.getElementById('temperatureValue').innerText);
+    console.log(document.getElementById('myonoffswitch').checked);
+    if (document.getElementById('myonoffswitch').checked=== true) {
+        console.log('f to C ');
+        currentValue = ((currentValue -32)*5)/9 ;
+        document.getElementById('temperatureValue').innerText = currentValue.toPrecision(2);
+        document.getElementById('temperatureUnit').innerText = "°C";
+        document.getElementById('myonoffswitch').removeAttribute('checked');
+        return;
+    } else {
+        console.log('C to F ');
+        currentValue = ((currentValue * 9)/ 5) + 32 ;
+        document.getElementById('temperatureValue').innerText = currentValue.toPrecision(2);
+        document.getElementById('temperatureUnit').innerText = "°F";
+        
+          return;
+
+    }
+}
+document.getElementById('myonoffswitch').addEventListener('change',convert);
 </script>

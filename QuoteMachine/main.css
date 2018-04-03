@@ -13,29 +13,48 @@ html {
 .container {
     padding: 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
+    grid-template-columns:  minmax(50px, 1fr);
+    grid-template-rows: repeat(2, minmax(50px, 1fr));
     grid-gap: 20px;
     grid-template-areas: 
    
-    ". txt ." 
+    "txt txt txt" 
     "btn1 . btn2";
 }
 .button1{
     grid-area: btn1;
+    align-self: start;
+    justify-self: start;
 }
-.button1{
+.button2{
     grid-area: btn2;
+    align-self: start;
+    justify-self: start;
 }
+.container a {
+    outline: none;
+    text-decoration: none;
+    border: 3px solid rgba(205, 210, 214, 0.70);
+   
+ 
+    padding: 20px;
+}
+
+.headerContainer a:link,
+a:visited,
+a:focus a:hover {
+    text-decoration: none
+}
+
+
+
 .button{
     
     background: rgba(215, 222, 228, 0.1);
     padding: 20px;
-    align-self: start;
-    justify-self: center;
     font-family: 'Karla', sans-serif;
     color: rgb(215, 222, 228);
-    border: 5px bold rgb(215, 222, 228);
+    border: 3px solid rgba(205, 210, 214, 0.70);
 
     font-size: 2rem;
 }

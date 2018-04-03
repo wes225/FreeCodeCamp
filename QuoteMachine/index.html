@@ -19,27 +19,33 @@
         </blockquote>
     </div>
 <button onclick="getJson()" class="button button1">Get Quote</button>
-<button onclick="postTweet()" class="button button2">Tweet it</button>
+<a href="https://twitter.com/intent/tweet" target ='_blank 'id= 'tweetButton' class="button button2 twitter-share-button" >Tweet it</a>
 </div>
 
 
 
+
+
+
+
+
 <script>
-    function postTweet(){
-        var currentQuote = document.getElementById('currentQuote').value;
-        var urlCall = 'https://api.twitter.com/1.1/statuses/update.json?status='+currentQuote+'&name= Name';
-        $.post(urlCall,function(response){
-            console.log('tweet posted: ' + currentQuote);
-        })
-    }
+
+
+
     function getJson() {
+        // Get quote from Forismatic.com
         $.getJSON("https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?", function (data) {
             var items = [];
             $.each(data, function (key, val) {
                 items.push(val);
             })
+            //Display quote into respective element
             document.getElementById("quoteText").innerHTML = "<p id='currentQuote'>\" " + items[0] + " \"</p>";
-
+            //Prepare link for tweet with the last loaded Quote
+            document.getElementById("tweetButton").setAttribute('href','https://twitter.com/intent/tweet'+'?text='+ items[0]+'--'+items[1]);
+            
+            //Verify if quote has known author.
             if (items[1] !=="") {
 document.getElementById("authorText").innerHTML = "<cite>" + items[1]+ "</cite>";
             } else {
@@ -47,7 +53,29 @@ document.getElementById("authorText").innerHTML = "<cite>" + items[1]+ "</cite>"
         });
     }
 
-    getJson();
+    
+</script>
+
+<!-- Twitter widget -->
+<script>
+
+// Loading the twitter widget once the quote elements are loaded.
+    getJson().done(window.twttr = (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function (f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs")));
 </script>
 
 <footer class="footer">

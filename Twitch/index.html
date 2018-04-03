@@ -22,17 +22,49 @@
 
 <script>
 
+    var twitchStreams = ['freecodecamp','nl_kripp','bricky','day9tv'];
+
     (function(){
- var urlCall = 'https://wind-bow.gomix.me/twitch-api/users/ninja?callback=?'
+
+        function createUrlCall(twitchUser,typeOfCall){
+            return 'https://wind-bow.gomix.me/twitch-api/'+typeOfCall+'/'+twitchUser+'?callback=?';
+        }
+        function getJsonData(twitchUser){
+            var streamerData = [];
+            $.getJSON(createUrlCall(twitchUser,'users'), function (response) {
+                streamerData[0]=response;
+            })
+            $.getJSON(createUrlCall(twitchUser, 'channels'), function (response) {
+                streamerData[1] = response;
+            })
+            $.getJSON(createUrlCall(twitchUser, 'streams'), function (response) {
+                streamerData[2] = response;
+            })
+
+            return streamerData;
+        }
+
+        twitchStreams.forEach(function(element){
+            getJsonData(element);
+            console.log(getJsonData(element));
+
+
+        });
+
+
+
+
+/*  var urlCall = 'https://wind-bow.gomix.me/twitch-api/users/ninja?callback=?'
         $.getJSON(urlCall, function(response){
             console.log(response);
         })
  $.getJSON('https://wind-bow.gomix.me/twitch-api/channels/ninja?callback=?', function (response) {
             console.log(response);
-        })
+        })   
  $.getJSON('https://wind-bow.gomix.me/twitch-api/streams/ninja?callback=?', function (response) {
             console.log(response);
-        })
+        }) */
+
     })()
 
 </script>

@@ -11,31 +11,60 @@ html {
     background: rgb(46, 65, 114, 1);
 }
 
-
 /* Styling for the header*/
-.headerContainer{
+
+.headerContainer {
     padding-top: 20px;
-    display:grid;
+    display: grid;
     grid-gap: 10px;
     padding: 10px
 }
+
 .headerContainer h1 {
     text-align: center;
     color: rgba(199, 207, 228, 0.753);
 }
-#searchedString{
-justify-self: center;
-align-self:center;
-}
-#searchButton{
-justify-self: center;
-align-self:center;
-}
-#randomButton {
-justify-self: center;
-align-self:center;
+
+#searchedString {
+    width: 20em;
+    height: 1.5em;
+    font-size: 1.5em;
+    margin: 10px;
+    justify-self: center;
+    align-self: center;
+    border: 3px solid rgba(52, 98, 212, 0.753);
 }
 
+#searchButton {
+    padding: 5px;
+    width: 10em;
+    font-size: 1em;
+    justify-self: center;
+    align-self: center;
+    border-radius: 0px;
+    background: rgb(46, 65, 114, 1);
+    border: 3px solid white;
+    color: white;
+}
+
+#randomButton {
+    padding: 5px;
+    width: 10em;
+    font-size: 1em;
+    justify-self: center;
+    align-self: center;
+    border-radius: 0px;
+    background: rgb(46, 65, 114, 1);
+    border: 3px solid white;
+    color: white;
+    text-align: center;
+}
+
+#randomButton a:link,
+a:visited,
+a:focus a:hover {
+    text-decoration: none
+}
 
 .headerContainer a {
     outline: none;
@@ -58,10 +87,10 @@ a:focus a:hover {
     text-decoration: none
 }
 
-
 /* Styling for the generated seach results*/
+
 #ResultContainer {
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(auto-fill, 1fr);
     background: rgb(46, 65, 114, 1);
@@ -73,8 +102,6 @@ a:focus a:hover {
     background: rgba(199, 207, 228, 0.753);
     padding: 15px;
 }
-
-
 
 #ResultContainer a {
     outline: none;
@@ -90,6 +117,7 @@ a:focus a:hover {
     transition: border .5s;
     padding: 10px;
 }
+
 #ResultContainer a:link,
 a:visited,
 a:focus {
@@ -97,8 +125,6 @@ a:focus {
 }
 
 #ResultContainer a:hover {
-    
     border: 3px solid white;
     border-radius: 6px;
 }
-

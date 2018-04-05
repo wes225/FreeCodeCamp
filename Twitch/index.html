@@ -13,12 +13,15 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 
 <body>
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+    <h1>Twitch streams, for FreeCodeCamp</h1>    
     <div id='streamersContainer'>
 
 
@@ -58,10 +61,10 @@
         twitchStreams.forEach(function (element, index) {
             var array = [];
             // Calling the Skeleton html once for every array element (streamer)
-            targetContainer.innerHTML += '<a class ="streamer" id= "streamer' + index +
-                '"> <img id= logoLink' + index + '><h3 id="streamerName' + index + '"></h3> <p id ="bio' +
-                index + '"></p> <span id = "streamerStatus' + index + '"></span> <p id ="liveStreamDetails' +
-                index + '"></p> <span id ="currentViewers' + index + '"></span> </a>';
+            targetContainer.innerHTML += '<a class ="streamerClass" id= "streamer' + index +
+                '"> <img class ="imgClass" id= "logoLink' + index + '"><h3 class= titleClass id="streamerName' + index + '"></h3> <p class = "bioClass" id ="bio' +
+                index + '"></p> <span class="statusClass" id = "streamerStatus' + index + '"></span> <p class="liveStreamDetailsClass" id ="liveStreamDetails' +
+                index + '"></p> <span class= "currentViewersClass" id ="currentViewers' + index + '"></span> </a>';
 
 
             array[0] = getJsonData(element, 'users', index);
@@ -85,6 +88,9 @@
 
                 streamerName.innerText = response.display_name;
                 bio.innerText = response.bio;
+                if (response.bio.length>80) {
+                    bio.style.fontSize = "1.4vw";
+                }
                 logoLink.setAttribute('src', response.logo);
 
             }

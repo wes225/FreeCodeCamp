@@ -10,7 +10,7 @@
 html{
     padding:20px;
     padding-top: 30px;
-    background-color: rgb(29.4,17.6,45.1);
+    background-color: rgb(75, 45, 115);
 }
 h1{
     text-align: center;
@@ -42,7 +42,7 @@ a:focus a:hover {
 }
 /*The individual grid layout for every streamers, displaying the elements that need to be displayed. */
 .streamerClass{
-    background-color: rgb(56.1, 47.1, 67.8);
+    background-color: rgb(143, 120, 173);
     padding: 10px;
     
    justify-self:center;

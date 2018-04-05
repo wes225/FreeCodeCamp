@@ -62,7 +62,7 @@
         twitchStreams.forEach(function (element, index) {
             var array = [];
             // Calling the Skeleton html once for every array element (streamer)
-            targetContainer.innerHTML += '<a class ="streamerClass" id= "streamer' + index +
+            targetContainer.innerHTML += '<a class ="streamerClass" target="_blank" id= "streamer' + index +
                 '"> <img class ="imgClass" id= "logoLink' + index + '"><h3 class= titleClass id="streamerName' + index + '"></h3> <p class = "bioClass" id ="bio' +
                 index + '"></p> <span class="statusClass" id = "streamerStatus' + index + '"></span> <p class="liveStreamDetailsClass" id ="liveStreamDetails' +
                 index + '"></p> <span class= "currentViewersClass" id ="currentViewers' + index + '"></span> </a>';

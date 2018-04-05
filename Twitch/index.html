@@ -41,7 +41,8 @@
 
 
     // List of streamers to be queried.
-    var twitchStreams = ['freecodecamp', 'nl_kripp', 'bricky', 'day9tv', 'bmkibler'];
+    var twitchStreams = ['freecodecamp','ninja', 'nl_kripp', 'bricky', 'day9tv', 'bmkibler'];
+    
 
     (function () {
 
@@ -103,6 +104,7 @@
                 var streamerStatus = document.getElementById('streamerStatus' + index);
                 var liveStreamDetails = document.getElementById('liveStreamDetails' + index);
                 var currentViewers = document.getElementById('currentViewers' + index);
+               
 
                 //Response.stream would be null if the streamer is currently offline.
                 if (response.stream !== null) {
@@ -110,11 +112,15 @@
 
                     streamerStatus.innerText = "Online";
                     liveStreamDetails.innerText = response.stream.channel.status;
-                    currentViewers.innerText = response.stream.viewers;
+                    currentViewers.innerText = response.stream.viewers + ' viewers';
+                      if (response.stream.channel.status > 80) {
+                        liveStreamDetails.style.fontSize = "1.4vw";
+                    }
                 } else {
                     streamerStatus.innerText = "Offline";
-                    liveStreamDetails.innerText = "NA";
-                    currentViewers.innerText = "NA";
+                   
+                    currentViewers.innerText = "";
+                    
                     console.log(response);
 
                 }

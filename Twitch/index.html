@@ -33,18 +33,20 @@
 </html>
 
 <script>
+    // Container in which the data will be displayed
     var targetContainer = document.getElementById('streamersContainer');
 
 
-
+    // List of streamers to be queried.
     var twitchStreams = ['freecodecamp', 'nl_kripp', 'bricky', 'day9tv', 'bmkibler'];
 
     (function () {
 
+        //Creating URL call, per user and per api to call
         function createUrlCall(twitchUser, typeOfCall) {
             return 'https://wind-bow.gomix.me/twitch-api/' + typeOfCall + '/' + twitchUser + '?callback=?';
         }
-
+        // GET function to get the data then call the function to add the response to the page.
         function getJsonData(twitchUser, typeOfCall, index) {
             var streamerData;
             $.getJSON(createUrlCall(twitchUser, typeOfCall), function (response) {
@@ -53,8 +55,9 @@
             })
         }
 
-        twitchStreams.forEach(function (element,index) {
+        twitchStreams.forEach(function (element, index) {
             var array = [];
+            // Calling the Skeleton html once for every array element (streamer)
             targetContainer.innerHTML += '<a class ="streamer" id= "streamer' + index +
                 '"> <img id= logoLink' + index + '><h3 id="streamerName' + index + '"></h3> <p id ="bio' +
                 index + '"></p> <span id = "streamerStatus' + index + '"></span> <p id ="liveStreamDetails' +
@@ -69,10 +72,10 @@
         })
 
 
-
+        // function to add the data in the page
         function addToPage(response, typeOfCall, index) {
 
-
+            //different tasks per type of api called
             if (typeOfCall === 'users') {
 
                 streamerName = document.getElementById('streamerName' + index);
@@ -95,6 +98,7 @@
                 var liveStreamDetails = document.getElementById('liveStreamDetails' + index);
                 var currentViewers = document.getElementById('currentViewers' + index);
 
+                //Response.stream would be null if the streamer is currently offline.
                 if (response.stream !== null) {
                     console.log(response);
 

@@ -2,69 +2,121 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 7]>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div id='example'></div>
-        
-    </body>
+    <div id='streamersContainer'>
+
+
+
+    </div>
+
+
+
+
+</body>
+
 </html>
 
 <script>
+    var targetContainer = document.getElementById('streamersContainer');
 
-    var twitchStreams = ['freecodecamp','nl_kripp','bricky','day9tv'];
 
-    (function(){
 
-        function createUrlCall(twitchUser,typeOfCall){
-            return 'https://wind-bow.gomix.me/twitch-api/'+typeOfCall+'/'+twitchUser+'?callback=?';
-        }
-        function getJsonData(twitchUser){
-            var streamerData = [];
-            $.getJSON(createUrlCall(twitchUser,'users'), function (response) {
-                streamerData[0]=response;
-            })
-            $.getJSON(createUrlCall(twitchUser, 'channels'), function (response) {
-                streamerData[1] = response;
-            })
-            $.getJSON(createUrlCall(twitchUser, 'streams'), function (response) {
-                streamerData[2] = response;
-            })
+    var twitchStreams = ['freecodecamp', 'nl_kripp', 'bricky', 'day9tv', 'bmkibler'];
 
-            return streamerData;
+    (function () {
+
+        function createUrlCall(twitchUser, typeOfCall) {
+            return 'https://wind-bow.gomix.me/twitch-api/' + typeOfCall + '/' + twitchUser + '?callback=?';
         }
 
-        twitchStreams.forEach(function(element){
-            getJsonData(element);
-            console.log(getJsonData(element));
+        function getJsonData(twitchUser, typeOfCall, index) {
+            var streamerData;
+            $.getJSON(createUrlCall(twitchUser, typeOfCall), function (response) {
+                streamerData = response;
+                addToPage(response, typeOfCall, index);
+            })
+        }
+
+        twitchStreams.forEach(function (element,index) {
+            var array = [];
+            targetContainer.innerHTML += '<a class ="streamer" id= "streamer' + index +
+                '"> <img id= logoLink' + index + '><h3 id="streamerName' + index + '"></h3> <p id ="bio' +
+                index + '"></p> <span id = "streamerStatus' + index + '"></span> <p id ="liveStreamDetails' +
+                index + '"></p> <span id ="currentViewers' + index + '"></span> </a>';
 
 
-        });
+            array[0] = getJsonData(element, 'users', index);
+            array[1] = getJsonData(element, 'channels', index);
+            array[2] = getJsonData(element, 'streams', index);
 
 
-
-
-/*  var urlCall = 'https://wind-bow.gomix.me/twitch-api/users/ninja?callback=?'
-        $.getJSON(urlCall, function(response){
-            console.log(response);
         })
- $.getJSON('https://wind-bow.gomix.me/twitch-api/channels/ninja?callback=?', function (response) {
-            console.log(response);
-        })   
- $.getJSON('https://wind-bow.gomix.me/twitch-api/streams/ninja?callback=?', function (response) {
-            console.log(response);
-        }) */
+
+
+
+        function addToPage(response, typeOfCall, index) {
+
+
+            if (typeOfCall === 'users') {
+
+                streamerName = document.getElementById('streamerName' + index);
+                bio = document.getElementById('bio' + index);
+                logoLink = document.getElementById('logoLink' + index);
+
+
+                streamerName.innerText = response.display_name;
+                bio.innerText = response.bio;
+                logoLink.setAttribute('src', response.logo);
+
+            }
+            if (typeOfCall === 'channels') {
+                var streamerURL = document.getElementById('streamer' + index);
+                streamerURL.setAttribute("href", response.url);
+
+            }
+            if (typeOfCall === 'streams') {
+                var streamerStatus = document.getElementById('streamerStatus' + index);
+                var liveStreamDetails = document.getElementById('liveStreamDetails' + index);
+                var currentViewers = document.getElementById('currentViewers' + index);
+
+                if (response.stream !== null) {
+                    console.log(response);
+
+                    streamerStatus.innerText = "Online";
+                    liveStreamDetails.innerText = response.stream.channel.status;
+                    currentViewers.innerText = response.stream.viewers;
+                } else {
+                    streamerStatus.innerText = "Offline";
+                    liveStreamDetails.innerText = "NA";
+                    currentViewers.innerText = "NA";
+                    console.log(response);
+
+                }
+
+            }
+
+
+        }
+
+
+
+
 
     })()
-
 </script>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css"></link>
+</head>
+
+<body>
+
+    <button onclick="addNumber(0)"> 0 </button>
+    <button onclick="addNumber(1)"> 1 </button>
+    <button onclick="addNumber(2)"> 2 </button>
+    <button onclick="addNumber(3)"> 3 </button>
+    <button onclick="addNumber(4)"> 4 </button>
+    <button onclick="addNumber(5)"> 5 </button>
+    <button onclick="addNumber(6)"> 6 </button>
+    <button onclick="addNumber(7)"> 7</button>
+    <button onclick="addNumber(8)"> 8 </button>
+    <button onclick="addNumber(9)"> 9 </button>
+    <button onclick="operation('+')"> + </button>
+    <button onclick="operation('-')"> - </button>
+    <button onclick="operation('/')"> / </button>
+    <button onclick="operation('x')"> x </button>
+    <button onclick="operation('=')"> = </button>
+
+    <label>Current total =
+        <span id="total"></span>
+    </label>
+
+
+</body>
+
+</html>
+
+<script>
+    var currentInput = '';
+
+    var firstPart = '';
+    var secondPart = '';
+
+    var previousOperator = '';
+
+    var partialTotal = '';
+
+    function calculate(operator) {
+        if (operator === '+') {
+            console.log(firstPart + " and " + secondPart);
+            console.log("result of addition = " + (parseInt(firstPart) + parseInt(secondPart)));
+            return parseInt(firstPart) + parseInt(secondPart);
+        } else if (operator === '-') {
+            return parseInt(firstPart) - parseInt(secondPart);
+        } else if (operator === '/') {
+            return parseInt(firstPart) / parseInt(secondPart);
+        } else if (operator === 'x') {
+            return parseInt(firstPart) * parseInt(secondPart);
+        } else if (operator === '=') {
+            document.getElementById('total').innerText = partialTotal;
+        }
+
+
+    }
+
+    function addNumber(value) {
+
+        currentInput = currentInput + value;
+        console.log(currentInput);
+    }
+
+    function operation(operator) {
+
+
+        if (firstPart === '' && previousOperator !== "=") {
+            firstPart = currentInput;
+            previousOperator = operator;
+            currentInput = '';
+            console.log('first part is ' + firstPart + ', operator is ' + previousOperator);
+        } else if (firstPart !== '' && previousOperator !== "=") {
+            secondPart = currentInput;
+            partialTotal = calculate(previousOperator);
+
+            firstPart = partialTotal;
+            secondPart = '';
+            currentInput = '';
+            previousOperator = operator;
+
+        } else if (operator === '=') {
+            partialTotal = calculate(previousOperator);
+            firstPart = partialTotal;
+            secondPart = '';
+            currentInput = '';
+            previousOperator = operator;
+        } else if (firstPart !== '' && previousOperator === "=") {
+            previousOperator = operator;
+            currentInput = '';
+        }
+
+
+    }
+</script>

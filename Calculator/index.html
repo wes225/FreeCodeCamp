@@ -43,6 +43,7 @@
 </html>
 
 <script>
+    var validLastInput = true;
     var currentInput = '';
 
     var firstPart = '';
@@ -52,58 +53,78 @@
 
     var partialTotal = '';
 
-    function calculate(operator) {
-        if (operator === '+') {
-            console.log(firstPart + " and " + secondPart);
-            console.log("result of addition = " + (parseInt(firstPart) + parseInt(secondPart)));
-            return parseInt(firstPart) + parseInt(secondPart);
-        } else if (operator === '-') {
-            return parseInt(firstPart) - parseInt(secondPart);
-        } else if (operator === '/') {
-            return parseInt(firstPart) / parseInt(secondPart);
-        } else if (operator === 'x') {
-            return parseInt(firstPart) * parseInt(secondPart);
-        } else if (operator === '=') {
-            document.getElementById('total').innerText = partialTotal;
-        }
-
-
-    }
 
     function addNumber(value) {
-
+        validLastInput = true;
         currentInput = currentInput + value;
         console.log(currentInput);
     }
 
     function operation(operator) {
+        if (validLastInput) {
+            validLastInput = false;
+            if (firstPart === '') {
+                firstPart = currentInput;
+                previousOperator = operator;
+                currentInput = '';
+                console.log('first part is ' + firstPart + ', operator is ' + previousOperator);
+            } else if (operator === '=') {
+                console.log('went into else if 2, for operator = equal ');
+                secondPart = currentInput;
+                partialTotal = calculate(previousOperator);
+                calculate(operator);
+                firstPart = partialTotal;
+                secondPart = '';
+                currentInput = '';
+                previousOperator = operator;
+ validLastInput = true;
+            } else if (firstPart !== '' && previousOperator === "=") {
+                console.log('went into else if 3, with previous operator = equal');
+                firstPart = partialTotal;
+                secondPart = '';
+                previousOperator = operator;
+                currentInput = '';
+            } else if (firstPart !== '' && previousOperator !== "=") {
+                console.log('went into else if 1');
+                secondPart = currentInput;
+                partialTotal = calculate(previousOperator);
 
+                firstPart = partialTotal;
+                secondPart = '';
+                currentInput = '';
+                previousOperator = operator;
 
-        if (firstPart === '' && previousOperator !== "=") {
-            firstPart = currentInput;
-            previousOperator = operator;
-            currentInput = '';
-            console.log('first part is ' + firstPart + ', operator is ' + previousOperator);
-        } else if (firstPart !== '' && previousOperator !== "=") {
-            secondPart = currentInput;
-            partialTotal = calculate(previousOperator);
+            }
 
-            firstPart = partialTotal;
-            secondPart = '';
-            currentInput = '';
-            previousOperator = operator;
-
-        } else if (operator === '=') {
-            partialTotal = calculate(previousOperator);
-            firstPart = partialTotal;
-            secondPart = '';
-            currentInput = '';
-            previousOperator = operator;
-        } else if (firstPart !== '' && previousOperator === "=") {
-            previousOperator = operator;
-            currentInput = '';
+        } else {
+            console.log('invalid input');
         }
+    }
 
-
+    function calculate(operator) {
+        if (operator === '+') {
+            result = parseInt(firstPart) + parseInt(secondPart);
+            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+            return String(result);
+        }
+        if (operator === '-') {
+            result = parseInt(firstPart) - parseInt(secondPart);
+            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+            return result
+        }
+        if (operator === '/') {
+            result = parseInt(firstPart) / parseInt(secondPart);
+            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+            return result
+        }
+        if (operator === 'x') {
+            result = parseInt(firstPart) * parseInt(secondPart);
+            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+            return result
+        }
+        if (operator === '=') {
+            document.getElementById('total').innerText = partialTotal;
+            
+        }
     }
 </script>

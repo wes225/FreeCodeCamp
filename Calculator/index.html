@@ -17,24 +17,24 @@
 
 <body>
 
-    <button onclick="addNumber(0)"> 0 </button>
-    <button onclick="addNumber(1)"> 1 </button>
-    <button onclick="addNumber(2)"> 2 </button>
-    <button onclick="addNumber(3)"> 3 </button>
-    <button onclick="addNumber(4)"> 4 </button>
-    <button onclick="addNumber(5)"> 5 </button>
-    <button onclick="addNumber(6)"> 6 </button>
-    <button onclick="addNumber(7)"> 7</button>
-    <button onclick="addNumber(8)"> 8 </button>
-    <button onclick="addNumber(9)"> 9 </button>
-    <button onclick="operation('+')"> + </button>
-    <button onclick="operation('-')"> - </button>
-    <button onclick="operation('/')"> / </button>
-    <button onclick="operation('x')"> x </button>
-    <button onclick="operation('=')"> = </button>
+    <button class = 'numberButton ' onclick="addNumber(0)"> 0 </button>
+    <button class = 'numberButton ' onclick="addNumber(1)"> 1 </button>
+    <button class = 'numberButton ' onclick="addNumber(2)"> 2 </button>
+    <button class = 'numberButton ' onclick="addNumber(3)"> 3 </button>
+    <button class = 'numberButton ' onclick="addNumber(4)"> 4 </button>
+    <button class = 'numberButton ' onclick="addNumber(5)"> 5 </button>
+    <button class = 'numberButton ' onclick="addNumber(6)"> 6 </button>
+    <button class = 'numberButton ' onclick="addNumber(7)"> 7</button>
+    <button class = 'numberButton ' onclick="addNumber(8)"> 8 </button>
+    <button class = 'numberButton ' onclick="addNumber(9)"> 9 </button>
+    <button class = 'operationButton' onclick="operation('+')"> + </button>
+    <button class = 'operationButton' onclick="operation('-')"> - </button>
+    <button class = 'operationButton' onclick="operation('/')"> / </button>
+    <button class = 'operationButton' onclick="operation('x')"> x </button>
+    <button class = 'operationButton' onclick="operation('=')"> = </button>
 
-    <button onclick="allClear()"> AC </button>
-    <button onclick="clearEntry()"> CE </button>
+    <button class = 'miscButton' onclick="allClear()"> AC </button>
+    <button class = 'miscButton' onclick="clearEntry()"> CE </button>
 
     <label>Current total =
         <span id="total"></span>

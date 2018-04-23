@@ -1,6 +1,15 @@
 body {
+ 
+}
+
+.numberButtons{
     display:grid;
-    grid-template-columns: repeat(4,4rem);
-    grid-template-rows: repeat(5,4rem);
+    grid-template-columns: repeat(3,4rem);
+    grid-template-rows: repeat(4,4rem);
     
+
+}
+.operations{
+    display:grid;
+    grid-template-areas: ''
 }

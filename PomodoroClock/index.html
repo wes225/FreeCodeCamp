@@ -19,6 +19,27 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <h1>Pomodoro, for Freecodecamp</h1>
+        <h2 id='displayedTime'></h2>
+    <div>
+        <span>Session length</span>
+        <span id='sessionElement'></span>
+        <button minusSessionButton onclick='editSessionLength(-1)'>-</button>
+        <button plusSessionButton onclick='editSessionLength(1)'>+</button>
+    </div>
+
+    <div>
+        <span>Break Length</span>
+        <span id = 'breakElement'></span>
+        <button minusBreakButton onclick='editBreakLength(-1)'>-</button>
+        <button plusBreakButton onclick='editBreakLength(1)'>+</button>
+    </div>
+
+    <div>
+        <button onclick='startTimer()'>Start</button>
+        <button onclick='pauseTimer()'>Pause</button>
+        <button onclick='stopTimer()'>Stop</button>
+    </div>
 
 </body>
 
@@ -26,7 +47,51 @@
 
 
 <script>
+    var isBreak = false;
+    var timerIsRunning = false;
+    var sessionLength = 25;
+    var breakLength = 5;
+    var isPaused = false;
+    var pausedValue;
+    var currentTime;
+    var appTimer;
+    var breakElement = document.getElementById('breakElement');
+    var sessionElement = document.getElementById('sessionElement');
+    var displayedTime = document.getElementById('displayedTime');
+    sessionElement.innerText = sessionLength;
+    breakElement.innerText = breakLength;
 
+    function initialize() {
+        isPaused = false;
+        isBreak = false;
+        timerIsRunning = false;
+        currentTime = sessionLength * 60;
+    }
+
+    // Adds or substract a minute from the session/break length
+    function editSessionLength(number) {
+
+        stopTimer();
+        sessionLength += number;
+        currentTime = sessionLength * 60;
+        console.log(`Timer is ${sessionLength} and currentTime is ${currentTime}`);
+        sessionElement.innerText = sessionLength;
+
+    }
+
+
+    function editBreakLength(number) {
+
+        stopTimer();
+        breakLength += number;
+        currentTime = breakLength * 60;
+        console.log(`Timer is ${breakLength} and currentTime is ${currentTime}`);
+        breakElement.innerText = breakLength;
+
+    }
+
+
+    // Converts seconds to HH:MM:SS
     function convertToHHMMSS(seconds) {
         var hh = Math.floor(seconds / 3600);
         var mm = Math.floor((seconds % 3600) / 60);
@@ -34,29 +99,68 @@
         var result = [''];
         result = [hh, mm, ss];
 
-        function elementTreatement(element,index) {
+        function elementTreatement(element, index) {
             if (parseInt(element) < 10) {
-                result[index]= '0'.concat(element);
-            } 
+                result[index] = '0'.concat(element);
+            }
         }
         result.forEach(elementTreatement);
-        console.log(result.join(':'));
+        return (result.join(':'));
 
     }
-    convertToHHMMSS(3601);
 
-    var currentTime = 5;
+
     function timeManager() {
-        if (currentTime >= 0) {
-        console.log(currentTime);
-        currentTime -= 1;
+
+
+        if (currentTime > 0) {
+            console.log(currentTime);
+            displayedTime.innerText = convertToHHMMSS(currentTime);
+            currentTime -= 1;
+            
 
         } else {
-            clearInterval(myTimer);
-            console.log('Interval cleared');
+
+            if (isBreak) {
+                isBreak = false;
+                currentTime = sessionLength * 60;
+            } else if (!isBreak) {
+                isBreak = true;
+                currentTime = breakLength * 60;
+            }
         }
     }
 
-    var myTimer = setInterval(timeManager, 1000)
+    function stopTimer() {
+        clearInterval(appTimer);
+        initialize();
+    }
 
+    function startTimer() {
+
+
+        if (!timerIsRunning) {
+
+            if (isPaused) {
+                appTimer = setInterval(timeManager, 1000);
+                timerIsRunning = true;
+                isPaused = false;
+            } else {
+                currentTime = sessionLength * 60;
+                appTimer = setInterval(timeManager, 1000);
+                timerIsRunning = true;
+            }
+
+
+
+        }
+
+
+    }
+
+    function pauseTimer() {
+        isPaused = true;
+        clearInterval(appTimer);
+        timerIsRunning = false;
+    }
 </script>

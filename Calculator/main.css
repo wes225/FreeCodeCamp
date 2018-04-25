@@ -1,15 +1,55 @@
-body {
- 
+.calculator {
+  display: grid;
+  grid-template-columns: repeat(4, 5rem);
+  grid-template-rows: repeat(6, 5rem);
 }
 
-.numberButtons{
-    display:grid;
-    grid-template-columns: repeat(3,4rem);
-    grid-template-rows: repeat(4,4rem);
-    
-
+.numberButton {
+  grid-column: 1 /4;
+  grid-row: 2/5;
+  display: grid;
+  grid-template-columns: repeat(3, 5rem);
+  grid-template-rows: repeat(3, 5rem);
 }
-.operations{
-    display:grid;
-    grid-template-areas: ''
+
+#zeroButton {
+  grid-column: 1 /4;
+  grid-row: 5 / span 1;
+}
+#total {
+  border: solid black 2px;
+  grid-column: 1 /5;
+  grid-row: 1 / span 1;
+  font-size:2.5vw;
+  text-align: right;
+  padding:5%;
+}
+#clearEntryButton {
+  grid-column: 1 / 2;
+  grid-row: 6 / span 1;
+}
+#allClearButton {
+  grid-column: 2 / 3;
+  grid-row: 6 / span 1;
+}
+
+#plusButton {
+  grid-column: 4 / 5;
+  grid-row: 2 / span 1;
+}
+#minusButton {
+  grid-column: 4 / 5;
+  grid-row: 3 / span 1;
+}
+#divideButton {
+  grid-column: 4 / 5;
+  grid-row: 4 / span 1;
+}
+#multiplyButton {
+  grid-column: 4 / 5;
+  grid-row: 5 / span 1;
+}
+#equalButton {
+  grid-column: 3 / 5;
+  grid-row: 6 / span 1;
 }

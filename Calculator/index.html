@@ -16,29 +16,28 @@
 </head>
 
 <body>
-    <div class = 'numberButtons'>
-        <button class='numberButton ' onclick="addNumber(0)"> 0 </button>
-        <button class='numberButton ' onclick="addNumber(1)"> 1 </button>
-        <button class='numberButton ' onclick="addNumber(2)"> 2 </button>
-        <button class='numberButton ' onclick="addNumber(3)"> 3 </button>
-        <button class='numberButton ' onclick="addNumber(4)"> 4 </button>
-        <button class='numberButton ' onclick="addNumber(5)"> 5 </button>
-        <button class='numberButton ' onclick="addNumber(6)"> 6 </button>
-        <button class='numberButton ' onclick="addNumber(7)"> 7</button>
-        <button class='numberButton ' onclick="addNumber(8)"> 8 </button>
-        <button class='numberButton zeroButton ' onclick="addNumber(9)"> 9 </button>
-    </div>
-    <div class='operations'>
-        <button class='operationButton plusButton' onclick="operation('+')"> + </button>
-        <button class='operationButton minusButton' onclick="operation('-')"> - </button>
-        <button class='operationButton divideButton' onclick="operation('/')"> / </button>
-        <button class='operationButton multiplyButton' onclick="operation('x')"> x </button>
-        <button class='operationButton equalButton' onclick="operation('=')"> = </button>
-        <button class='miscButton allClearButton' onclick="allClear()"> AC </button>
-        <button class='miscButton clearEntryButton' onclick="clearEntry()"> CE </button>
-        <label>Current total =
-            <span id="total"></span>
-        </label>
+    <div class='calculator'>
+        <div class='numberButton'>
+
+            <button onclick="addNumber(1)"> 1 </button>
+            <button onclick="addNumber(2)"> 2 </button>
+            <button onclick="addNumber(3)"> 3 </button>
+            <button onclick="addNumber(4)"> 4 </button>
+            <button onclick="addNumber(5)"> 5 </button>
+            <button onclick="addNumber(6)"> 6 </button>
+            <button onclick="addNumber(7)"> 7</button>
+            <button onclick="addNumber(8)"> 8 </button>
+            <button onclick="addNumber(9)"> 9 </button>
+        </div>
+        <button id='zeroButton' onclick="addNumber(0)"> 0 </button>
+        <button class='operationButton ' id='plusButton' onclick="operation('+')"> + </button>
+        <button class='operationButton ' id='minusButton' onclick="operation('-')"> - </button>
+        <button class='operationButton ' id='divideButton' onclick="operation('/')"> / </button>
+        <button class='operationButton ' id='multiplyButton' onclick="operation('x')"> x </button>
+        <button class='operationButton ' id='equalButton' onclick="operation('=')"> = </button>
+        <button class='miscButton' id='allClearButton' onclick="allClear()"> AC </button>
+        <button class='miscButton' id='clearEntryButton' onclick="clearEntry()"> CE </button>
+        <label id="total"></label>
     </div>
 
 
@@ -50,6 +49,7 @@
 </html>
 
 <script>
+    var screen = document.getElementById('total');
     var validLastInput = true;
     var currentInput = '';
 
@@ -64,7 +64,7 @@
     function addNumber(value) {
         validLastInput = true;
         currentInput = currentInput + value;
-        console.log(currentInput);
+        screen.innerText = currentInput;
     }
 
     function operation(operator) {
@@ -74,9 +74,9 @@
                 firstPart = currentInput;
                 previousOperator = operator;
                 currentInput = '';
-                console.log('first part is ' + firstPart + ', operator is ' + previousOperator);
+                
             } else if (operator === '=') {
-                console.log('went into else if 2, for operator = equal ');
+               
                 secondPart = currentInput;
                 partialTotal = calculate(previousOperator);
                 calculate(operator);
@@ -86,13 +86,13 @@
                 previousOperator = operator;
                 validLastInput = true;
             } else if (firstPart !== '' && previousOperator === "=") {
-                console.log('went into else if 3, with previous operator = equal');
+                
                 firstPart = partialTotal;
                 secondPart = '';
                 previousOperator = operator;
                 currentInput = '';
             } else if (firstPart !== '' && previousOperator !== "=") {
-                console.log('went into else if 1');
+             
                 secondPart = currentInput;
                 partialTotal = calculate(previousOperator);
 
@@ -111,26 +111,26 @@
     function calculate(operator) {
         if (operator === '+') {
             result = parseInt(firstPart) + parseInt(secondPart);
-            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+            
             return String(result);
         }
         if (operator === '-') {
             result = parseInt(firstPart) - parseInt(secondPart);
-            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+           
             return result
         }
         if (operator === '/') {
             result = parseInt(firstPart) / parseInt(secondPart);
-            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+         
             return result
         }
         if (operator === 'x') {
             result = parseInt(firstPart) * parseInt(secondPart);
-            console.log(firstPart + '' + operator + '' + secondPart + '=' + result);
+         
             return result
         }
         if (operator === '=') {
-            document.getElementById('total').innerText = partialTotal;
+            screen.innerText =partialTotal;
 
         }
     }
@@ -145,9 +145,11 @@
         previousOperator = '';
 
         partialTotal = '';
+        screen.innerText = currentInput;
     }
 
     function clearEntry() {
         currentInput = '';
+        screen.innerText = currentInput;
     }
 </script>

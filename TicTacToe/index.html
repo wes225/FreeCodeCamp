@@ -12,6 +12,7 @@
     <title>Tic Tac Toe</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
    
 </head>
 
@@ -22,13 +23,52 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
 <script type="text/babel">
 
-class Greeting extends React.Component {
+class Case extends React.Component {
+    constructor(props){
+        super(props);
+        this.caseClick = this.caseClick.bind(this);
+        this.state = {content: null};
+
+    }
+    caseClick(){
+        console.log(this.props.caseClick.state);
+        this.props.caseClick.caseClick();
+        this.setState({
+                content: this.props.caseClick.state.mark
+
+          });
+          
+        
+    }
     render() {
-        return (<p>Hello world</p>);
+        return (<button className = 'case' onClick={this.caseClick}>{this.state.content}</button>);
     }
 }
+
+
+class Board extends React.Component {
+     constructor(props){
+        super(props);
+        this.caseClick = this.caseClick.bind(this);
+        this.state = {number:1 , mark:'X'};
+
+    }
+    caseClick(){
+        if (this.state.number === 1 ){
+            this.setState({number:2 , mark:'O'});
+        }
+        if (this.state.number === 2 ){
+            this.setState( {number:1 , mark:'X'});
+        }
+    }
+  render() {
+        return (<div className = 'board'><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/><Case caseClick = {{caseClick: this.caseClick, state: this.state}}/></div>);
+    }
+}
+
+
 ReactDOM.render(
-    <Greeting />,
+    <Board/>,
     document.getElementById('root')
 );
 

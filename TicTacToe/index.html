@@ -30,19 +30,12 @@ class Case extends React.Component {
         this.state = {content: null, address: props};
     }
 
-    checkForWin(props){
-
-    }
+  
     caseClick(){
         if(!this.state.content){
-            console.log(`Case address is ${this.state.address.props.address}`)
-        this.props.caseClick.caseClick();
-        this.setState({
-                content: this.props.caseClick.state.mark
-
-          });
-          }
-        
+        this.setState({content: this.props.caseClick.state.mark});
+        this.props.caseClick.caseClick(this.state.address.props.address);
+        }
     }
     render() {
         return (<button className = 'case' onClick={this.caseClick}>{this.state.content}</button>);
@@ -55,28 +48,49 @@ class Board extends React.Component {
         super(props);
       
         this.caseClick = this.caseClick.bind(this);
-        this.state = {number:1 , mark:'X'};
+        this.state = {number:1 , mark:'X', xMarks: [], oMarks:[]};
 
     }
-    caseClick(){
+
+    checkForWinner(points){
+
+        for (var i=0;i<=9;i=i+3){
+            //Row wins
+            if(points.includes(1+i)&points.includes(2+i) & points.includes(3+i)) {console.log('winning combo!')}
+        }
+        for (var i=0;i<=3;i++){
+        //Column wins 
+            if(points.includes(1+i)&points.includes(4+i) & points.includes(7+i)) {console.log('winning combo!')}
+        }
+
+        //Diagonals
+        if(points.includes(1)&points.includes(5) & points.includes(9)) {console.log('winning combo!')}
+        if(points.includes(7)&points.includes(5) & points.includes(3)) {console.log('winning combo!')}
+    }
+
+    caseClick(address){
+        console.log(address)
         if (this.state.number === 1 ){
-            this.setState({number:2 , mark:'O'});
+            this.setState({number:2 , mark:'O',xMarks: [...this.state.xMarks ,address], oMarks: this.state.oMarks},()=>{this.checkForWinner(this.state.xMarks)})
+       
         }
         if (this.state.number === 2 ){
-            this.setState( {number:1 , mark:'X'});
+ this.setState( {number:1 , mark:'X',xMarks:this.state.xMarks, oMarks:[...this.state.oMarks,address]},()=>{this.checkForWinner(this.state.oMarks)});
         }
+        
+        
     }
   render() {
         return (<div className = 'board'>
-            <Case props={{address: [1,1]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [1,2]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [1,3]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [2,1]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [2,2]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [2,3]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [3,1]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [3,2]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
-            <Case props={{address: [3,3]}} caseClick = {{caseClick: this.caseClick, state: this.state}}/></div>);
+            <Case props={{address:1}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:2}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:3}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:4}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:5}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:6}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:7}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:8}} caseClick = {{caseClick: this.caseClick, state: this.state}}/>
+            <Case props={{address:9}} caseClick = {{caseClick: this.caseClick, state: this.state}}/></div>);
     }
 }
 

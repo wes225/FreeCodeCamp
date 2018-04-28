@@ -29,7 +29,18 @@ class Case extends React.Component {
         this.caseClick = this.caseClick.bind(this);
         this.state = {content: null, address: props};
     }
-
+    playRandomCase(){
+        var playedValidTurn = false;
+        var number = 0
+        while(!playedValidTurn){
+            number = Math.floor(Math.random()*Math.floor(10));
+            if(!this.state.content){ 
+                this.setState({
+                    content: this.props.caseClick.state.mark}); 
+                this.props.caseClick.caseClick(this.state.address.props.address);
+                }
+        } 
+    }
   
     caseClick(){
         if(!this.state.content){
@@ -48,7 +59,7 @@ class Board extends React.Component {
         super(props);
       
         this.caseClick = this.caseClick.bind(this);
-        this.state = {number:1 , mark:'X', xMarks: [], oMarks:[]};
+        this.state = {number:1 , mark:firstPlayerMarker, xMarks: [], oMarks:[]};
 
     }
 
@@ -56,25 +67,25 @@ class Board extends React.Component {
 
         for (var i=0;i<=9;i=i+3){
             //Row wins
-            if(points.includes(1+i)&points.includes(2+i) & points.includes(3+i)) {console.log('winning combo!')}
+            if(points.includes(1+i)&points.includes(2+i) & points.includes(3+i)) {declareWinner()}
         }
         for (var i=0;i<=3;i++){
         //Column wins 
-            if(points.includes(1+i)&points.includes(4+i) & points.includes(7+i)) {console.log('winning combo!')}
+            if(points.includes(1+i)&points.includes(4+i) & points.includes(7+i)) {declareWinner()}
         }
 
         //Diagonals
-        if(points.includes(1)&points.includes(5) & points.includes(9)) {console.log('winning combo!')}
-        if(points.includes(7)&points.includes(5) & points.includes(3)) {console.log('winning combo!')}
-    }
+        if(points.includes(1)&points.includes(5) & points.includes(9)) {declareWinner()}
+        if(points.includes(7)&points.includes(5) & points.includes(3)) {declareWinner()}
+         }
 
     caseClick(address){
         console.log(address)
-        if (this.state.number === 1 ){
+        if (this.state.mark === 'X' ){
             this.setState({number:2 , mark:'O',xMarks: [...this.state.xMarks ,address], oMarks: this.state.oMarks},()=>{this.checkForWinner(this.state.xMarks)})
        
         }
-        if (this.state.number === 2 ){
+        if (this.state.mark === 'O' ){
  this.setState( {number:1 , mark:'X',xMarks:this.state.xMarks, oMarks:[...this.state.oMarks,address]},()=>{this.checkForWinner(this.state.oMarks)});
         }
         
@@ -95,20 +106,30 @@ class Board extends React.Component {
 }
 
 
-ReactDOM.render(
-    <Board/>,
-    document.getElementById('root')
-);
+var firstPlayerMarker='';
+var board;
+
+function chooseFirstPlayerMark(){ 
+    if (confirm('Do you want to play with the "X"?')) {
+        firstPlayerMarker = 'X'; } 
+    else {
+         firstPlayerMarker= 'O'; 
+         }
+
+    board = ReactDOM.render(
+        <Board/>, document.getElementById('root') );
+     
+        console.log(ReactDOM.findDOMNode('<Case>'));
+}
+
+function declareWinner(){ 
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Board/>, document.getElementById('root') ); console.log('Winner declared'); }
 
 
 
 
-
-
-
-
-
-
+chooseFirstPlayerMark();
 </script>
 </body>
 

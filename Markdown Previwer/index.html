@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tic Tac Toe</title>
+    <title>Markdown Previwer</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
@@ -17,29 +17,53 @@
 </head>
 
 <body>
-<div id="root"></div>
+    <h1 align='center'>Markdown Previewer, in React.js</h1>
+<div class = 'container'>    
+<div id="rawTextContainer"></div>
+<div id='treatedText'></div>
+</div>
+<!-- Importing React tools/scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+<!-- Importing the Markdown library-->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.4/purify.js"></script>
 <script type="text/babel">
 
-class Example extends React.Component {
+class Previwer extends React.Component {
     constructor(props){
         super(props);
-    
+        this.state = {unTreated: 'Heading\n=======\n\nSub-heading\n-----------\n \n### Another deeper heading\n \nParagraphs are separated\nby a blank line.\n\nLeave 2 spaces at the end of a line to do a  \nline break\n\nText attributes *italic*, **bold**, \n`monospace`, ~~strikethrough~~ .\n\nShopping list:\n\n  * apples\n  * oranges\n  * pears\n\nNumbered list:\n\n  1. apples\n  2. oranges\n  3. pears\n\nThe rain---not the reign---in\nSpain.\n\n *[Wes225](https://www.freecodecamp.org/wes225)*', treated:''}
+        this.handleChange = this.handleChange.bind(this);
     }
-   
+   handleChange(event){
+    this.setState({unTreated: event.target.value, treated : marked(event.target.value)});
+    
+   }
   
- 
+   renderTreated(){
+       document.getElementById('treatedText').innerHTML = marked(this.state.unTreated);
+   }
     render() {
-        return ();
+        this.renderTreated();
+        return (<div>
+                    <textarea id={'rawText'} onChange = {this.handleChange}>
+                        {this.state.unTreated}
+                    </textarea>
+
+                  
+                </div>
+            
+            );
     }
 }
 
 
 
  ReactDOM.render(
-        <Example/>, document.getElementById('root') );
+        <Previwer/>, document.getElementById('rawTextContainer') );
 </script>
 </body>
 
